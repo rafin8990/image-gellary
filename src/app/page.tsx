@@ -7,8 +7,8 @@ const ImageGallery = () => {
   const [imageList, setImageList] = useState<string[]>([]);
   const [selectedStates, setSelectedStates] = useState<boolean[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
-  const [showGallery, setShowGallery] = useState<boolean>(true);
 
+  // handle image file upload
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files) {
@@ -31,6 +31,8 @@ const ImageGallery = () => {
     }
   };
 
+  // handle dragging
+
   const handleDragStart = (e: DragEvent, index: number) => {
     e.dataTransfer.setData("index", index.toString());
   };
@@ -52,16 +54,19 @@ const ImageGallery = () => {
     e.preventDefault();
   };
 
+  // handle select photos
   const toggleImageSelection = (index: number) => {
     const newSelectedStates = [...selectedStates];
     newSelectedStates[index] = !newSelectedStates[index];
     setSelectedStates(newSelectedStates);
   };
 
+  // count the selected photos
   const countSelectedImages = () => {
     return selectedStates.filter((state) => state).length;
   };
 
+  // handle delete selected images
   const deleteSelectedImages = () => {
     const newImageList = imageList.filter((_, index) => !selectedStates[index]);
     const newSelectedStates = selectedStates.filter((state) => !state);
@@ -93,6 +98,7 @@ const ImageGallery = () => {
         <hr />
       </div>
       <div className="mt-5">
+        {/* image grid start here  */}
         <div className=" grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
           {imageList.map((image, index) => (
             <div
