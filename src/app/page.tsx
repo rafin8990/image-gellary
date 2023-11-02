@@ -10,7 +10,7 @@ const ImageGallery = () => {
 
   // handle image file upload
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
+    const files = e.target?.files; // Use optional chaining to safely access files
     if (files) {
       const newImages: string[] = [];
       const newSelectedStates: boolean[] = [];
@@ -18,7 +18,7 @@ const ImageGallery = () => {
         const file = files[i];
         const reader = new FileReader();
         reader.onload = (e) => {
-          newImages.push(e.target.result as string);
+          newImages.push(e.target?.result as string); // Use optional chaining here too
           newSelectedStates.push(false); // Initialize as unselected
           if (newImages.length === files.length) {
             setImageList([...imageList, ...newImages]);
@@ -105,9 +105,7 @@ const ImageGallery = () => {
               key={index}
               className={`relative group border  rounded-xl before:content-[''] before:absolute before:h-full before:w-full before:rounded-lg before:transition-colors before:cursor-move ${
                 (index === 0 ? " md:col-span-2 md:row-span-2" : " col-span-1") +
-                (imageList.find(
-                  (photo) => Number(photo.id) === Number(image.id)
-                )
+                (selectedStates[index]
                   ? " opacity-100"
                   : " hover:before:bg-black/50")
               }}`}
@@ -118,9 +116,7 @@ const ImageGallery = () => {
             >
               <Image
                 className={`group-hover:opacity-100 duration-700 rounded-xl hover:rounded-xl  w-full ${
-                  imageList.find(
-                    (photo) => Number(photo.id) === Number(image.id)
-                  ) && "opacity-70"
+                  selectedStates[index] && "opacity-70"
                 }`}
                 src={image}
                 alt={`Image ${index}`}
