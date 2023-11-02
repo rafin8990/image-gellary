@@ -1,5 +1,10 @@
 # Task for the `Fresher React JS Developers`
 
+### Used tecnology:
+
+1. -Next JS
+2. -TypeScript
+
 ---
 
 ## Objective:
